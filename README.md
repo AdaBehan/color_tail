@@ -3,7 +3,8 @@
 Script that can colorize a steam. 
 
 
-TODO
+TODO:
+
     Rebase into single awk script
 
     Add capacity to remove lines on expression 
@@ -17,7 +18,8 @@ TODO
     Add config file ? 
 
 
-BUGS
-Matching words stop the Line from be colorized if it needs to be 
+BUGS:
+
+    Matching words stop the Line from be colorized if it needs to be 
 
 
