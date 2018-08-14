@@ -25,7 +25,6 @@ drop = ""
                     break
                 }
                 highlight = highlight ","ARGV[inc_count]                
-
             }
         }
 
@@ -40,7 +39,6 @@ drop = ""
                     break
                 }
                 drop = drop","ARGV[inc_count]                
-
             }
         }
         delete ARGV[i]
@@ -61,8 +59,6 @@ drop = ""
             delete drop_terms[i]
     }
 
-
-
 }# end BEGIN
 {
     $0 = substr($0, index($0,$4))
@@ -78,59 +74,40 @@ drop = ""
     {
         if ($0~highlight_terms[i] && length(highlight_terms[i]) >= 2)
         {
-            $0 = target($0,search1)
-            break
+            $0 = target($0,highlight_terms[i])
+            print $0
         }
     }
 
     if ($3~(/!!!/)) 
     {
-        $0 = red($0)
-        #RED=True
+        $0 = "\033[31;1m" $0 "\033[0m"
+        print $0
     }
 
     else if ($3~(/\(ERROR\)/)) 
     {
-        $0 = red($0)
-        #RED=True
+        $0 = "\033[31;1m" $0 "\033[0m"
+        print $0
     }
 
     else if ($3~(/\(NOTICE\)/))
     {
-        $0 = blue($0)
-        #BLUE=True
+        $0 = "\033[34;1m" $0 "\033[0m"
+        print $0
     }
 
     else
     {
-        $0 = normal($0)
+        $0 = "\033[38;5;250m" $0 
+        print $0  
     }
 
-    print $0 
 }#end  
-
-
-function normal(s)
-{
-    s = "\033[38;5;250m" s 
-    return s  
-}
-
-function red(s) 
-{
-    s = "\033[31;1m" s "\033[0m"
-    return s
-}
-
-function blue(s) 
-{
-    s = "\033[34;1m" s "\033[0m"
-    return s
-}
 
 function target(s,t) 
 {
     gsub(t, "\033[33;1m" t "\033[0m\033[97;1m" ,s)
-    s = "\033[97;1m" s "\033[0m"
+    #s = "\033[97;1m" s "\033[0m"
     return s
 }
